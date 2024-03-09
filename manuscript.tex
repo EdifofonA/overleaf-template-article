@@ -1,90 +1,266 @@
-
-
-% Reference TeX file for: https://medium.com/the-stata-guide/the-stata-to-latex-guide-6e7ed5622856
-% Asjad Naqvi (asjadnaqvi@gmail.com)
-% Last update: 25 September, 2022
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%                    %%%
-%%%      Preamble      %%%
-%%%                    %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% %%%
+%%% Preamble %%%
 
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 
 %%% packages
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{amssymb, amsfonts, amsmath}
 \usepackage{bm}
-\usepackage[margin=1in]{geometry} % full-width
-    \topskip        =   20pt
-    \parskip        =   10pt
+\usepackage[margin=1in]{geometry}
     \parindent      =   0 pt
-    \baselineskip   =   15pt
-
-\usepackage{setspace}               % line spacing
-    \onehalfspacing
-\usepackage{adjustbox}              % resizing
-\usepackage{caption}                % to reset the cations etc 
-\usepackage{rotating}               % for the sidewaystable
-    \numberwithin{table}{section}   % reset the Table numbering for each section
-\usepackage{booktabs}               % neatly formatting lines
-\usepackage{dcolumn}                % aligning decimals
-    \newcolumntype{d}[1]{D{.}{.}{#1}}
-\usepackage{natbib}                 % bibliography
-    \bibliographystyle{plainnat}
+\usepackage{setspace} % line spacing
+% \onehalfspacing
+\usepackage{adjustbox} % resizing
+\usepackage{caption} % to reset the captions etc 
+\usepackage{booktabs} % neatly formatting lines
+\usepackage{dcolumn} % aligning decimals
+ \newcolumntype{d}[1]{D{.}{.}{#1}}
+\usepackage{natbib} % bibliography
+ \bibliographystyle{plainnat}
 
 \newcommand{\sym}[1]{\rlap{#1}} % for the stars
 
-%\usepackage{threeparttable}    
-%\usepackage{graphicx}  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%                    %%%
-%%%     Front page     %%%
-%%%                    %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% %%%
+%%% Front page %%%
 
-\title{The Stata--to--\LaTeX Guide\thanks{See the article on \href{https://medium.com/the-stata-guide/the-stata-to-latex-guide-6e7ed5622856}{Medium} for details.}}
-
-\author{
-    Asjad Naqvi\thanks{\href{mailto:asjadnaqvi@gmail.com}{asjadnaqvi@gmail.com}. For comments and suggestions, please open an \href{https://github.com/asjadnaqvi/The-Stata-Guide/issues}{Issue} on the \href{https://github.com/asjadnaqvi/The-Stata-Guide}{Stata Guide's GitHub} page. }
-    }
-
-\date{Last updated: 8 June, 2023}
+%\title{ECN607 practical notes\thanks{}}
+%\author{Edifofon Akpan\thanks{}}
+\date{9 March 2024}
 
 \begin{document}
 \maketitle
 
-\begin{abstract}
-This article introduces various wrappers for the Stata \texttt{estout} package \citep{Jann2005,Jann2007} that allows one to generate various summary statistic and regression tables in \LaTeX. Rather than going into the details of the \texttt{estout} package options, which are fairly extensive, the aim of this document is to provide ``templates'' for easy  replication. This is an evolving document so please check regularly for updates. Since \LaTeX requirements change over time, please see the change log for details, or message me to fix errors if they occur. And please feel free to request or suggest other table formats. 
-\end{abstract}
+%\begin{abstract}
+%Abstract here
+%\end{abstract}
 
-\vspace{4ex}
-\small{\textit{Keywords}: Stata, \LaTeX, estout, tables, regressions}
-
-\small{\textit{JEL}: 1337}
-
-%\begin{center}
-%\textbf{DOCUMENT IS BEING LIVE UPDATED! USE WITH CAUTION.}    
-%\end{center}
-
-\newpage
+%\vspace{4ex}
+%\small{\textit{Keywords}: Stata, \LaTeX, estout, tables, regressions}
+%\vspace{4ex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%                    %%%
-%%%   Introduction     %%%
-%%%                    %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% %%%
+%%% Introduction %%%
 
 \tableofcontents
-
-\listoftables
+%\listoftables
 
 \newpage
-\section*{Introduction}
-The document is divided into two sections. 
-Section \ref{sec:equations} is a simple guide for writing equations in \LaTeX. It highlights some basic mistakes users name.
+\section{Exercise One}
+Based on data and code supplied with World Bank book Impact Evaluation in Practice It uses a fictionalized case, the Health Insurance Subsidy Program (HISP). One of the primary objectives of HISP is to reduce the burden of health-related  out-of-pocket expenditures for low income households.
+
+\begin{verbatim}
+log using ex1.log, replace
+use evaluation.dta, clear
+\end{verbatim}
+
+Take a look at the variables in the dataset. 
+\begin{verbatim}
+describe
+
+\end{verbatim}
+
+\subsection{Experiment 1 - RCT with full compliance} 
+We have 200 treatment villages and 200 control villages, selected randomly. The teatment villages contain 4959 households. The control villages contain 4954 households. In the first experiment eligible (poor) households are identified in both groups. Check out the numbers at baseline (round==0). 
+
+\begin{verbatim}
+tab treatment_locality eligible if round==0
+
+ Household |
+is located |
+        in |
+ treatment | Household eligible to
+ community | enroll in HISP (0=no,
+    (0=no, |        1=yes)
+    1=yes) |         0          1 |     Total
+-----------+----------------------+----------
+         0 |     2,290      2,664 |     4,954 
+         1 |     1,995      2,964 |     4,959 
+-----------+----------------------+----------
+     Total |     4,285      5,628 |     9,913 
+
+\end{verbatim}
+
+In T villages eligible households are enrolled into the programme, while in C villages no-one is enrolled. We want to compare eligible household in T villages with elgible households in C villages. So keep eligible hhs only. 
+
+\begin{verbatim}
+keep if eligible==1
+\end{verbatim}
+
+ Check numbers enrolled into programme to confirm full compliance
+\begin{verbatim}
+tab treatment_locality enrolled if round==0
+
+ Household |
+is located |
+        in |
+ treatment |
+ community |  HH enrolled in HISP
+    (0=no, |     (0=no, 1=yes)
+    1=yes) |         0          1 |     Total
+-----------+----------------------+----------
+         0 |     2,664          0 |     2,664 
+         1 |         0      2,964 |     2,964 
+-----------+----------------------+----------
+     Total |     2,664      2,964 |     5,628 
+
+\end{verbatim}
+
+ Now we check balance across the T and C groups. What do 
+ you expect to find? 
+ There are 2 ways to do this: comparison of means using 
+ ttest command or with a regression. We do both as an 
+ illustration. 
+
+\begin{verbatim}
+ttest health_expenditures if round==0, by(treatment_locality)
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. err.   Std. dev.   [95% conf. interval]
+---------+--------------------------------------------------------------------
+       0 |   2,664    14.57385    .0821288    4.238992     14.4128    14.73489
+       1 |   2,964    14.48969    .0800166    4.356317     14.3328    14.64659
+---------+--------------------------------------------------------------------
+Combined |   5,628    14.52953    .0573314    4.301004    14.41714    14.64192
+---------+--------------------------------------------------------------------
+    diff |            .0841528    .1148309                 -.14096    .3092655
+------------------------------------------------------------------------------
+    diff = mean(0) - mean(1)                                      t =   0.7328
+H0: diff = 0                                     Degrees of freedom =     5626
+
+    Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = 0.7682         Pr(|T| > |t|) = 0.4637          Pr(T > t) = 0.2318
+
+\end{verbatim}
+ Do the same thing for other measured characteristics - can automate using a loop. Can also check balance using regressions
+\begin{verbatim}
+foreach x in age_hh age_sp educ_hh educ_sp female_hh ///
+indigenous hhsize dirtfloor bathroom land hospital_distance {
+	describe `x'
+	ttest `x' if round==0, by(treatment_locality)
+	}
+	
+regress health_expenditures treatment_locality ///
+if round==0, vce(cluster locality_identifier)
+	
+foreach x in age_hh age_sp educ_hh educ_sp female_hh ///
+indigenous hhsize dirtfloor bathroom land hospital_distance {
+	describe `x'
+	regress `x' treatment_locality ///
+	if round==0, vce(cluster locality_identifier)
+	}
+\end{verbatim}
+
+Now evaluate the impact of the subsidy on health expenditure. Use both a simple comparison of means and the regression method. Is this what you expect? Look both at the point estimates and SEs. 
+
+\begin{verbatim}
+ttest health_expenditures if round==1, by(treatment_locality)
+
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. err.   Std. dev.   [95% conf. interval]
+---------+--------------------------------------------------------------------
+       0 |   2,664    17.98055     .143776    7.420846    17.69863    18.26247
+       1 |   2,965    7.840179    .1468178    7.994495    7.552304    8.128054
+---------+--------------------------------------------------------------------
+Combined |   5,629    12.63925    .1231393    9.238733    12.39785    12.88065
+---------+--------------------------------------------------------------------
+    diff |            10.14037    .2063105                9.735923    10.54482
+------------------------------------------------------------------------------
+    diff = mean(0) - mean(1)                                      t =  49.1510
+H0: diff = 0                                     Degrees of freedom =     5627
+
+    Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = 1.0000         Pr(|T| > |t|) = 0.0000          Pr(T > t) = 0.0000
+\end{verbatim}
+
+The regression method
+
+\begin{verbatim}
+regress health_expenditures treatment_locality ///
+if round==1, vce(cluster locality_identifier)
+
+Linear regression                               Number of obs     =      5,629
+                                                F(1, 196)         =     656.77
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.3004
+                                                Root MSE          =     7.7283
+
+                        (Std. err. adjusted for 197 clusters in locality_identifier)
+------------------------------------------------------------------------------------
+                   |               Robust
+health_expenditu~s | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------------+----------------------------------------------------------------
+treatment_locality |  -10.14037   .3956824   -25.63   0.000    -10.92071    -9.36003
+             _cons |   17.98055   .3066373    58.64   0.000     17.37582    18.58528
+------------------------------------------------------------------------------------
+
+\end{verbatim}
+
+The vce(cluster clustervar) option specifies that the standard errors allow for intragroup correlation, relaxing the usual requirement that the observations be independent. That is, the observations are independent across groups/clusters but not necessarily within the cluster. clustvar specifies to which group each observation belongs, for example, vce(cluster locality identifier) in data with repeated observations on individuals. The vce option affects the standard errors and variance-covariance matrix of the estimators but not the estimated coefficients.
+We may also add controls to the regression. The above estimate is unbiased (due to randomisation) so why do we do this? Are the results are expected? 
+
+
+\begin{verbatim}
+regress health_expenditures treatment_locality ///
+age_hh age_sp educ_hh educ_sp female_hh indigenous hhsize ///
+dirtfloor bathroom land hospital_distance ///
+if round==1, vce(cluster locality_identifier)
+\end{verbatim}
+
+Adding controls captures some of the variability in health expenditures (which is in the error term) and so you have a more precise estimate and lower standard error (now standard error is 0.34 compared with 0.39 previously)
+
+\subsection{Experiment 2 - RCT with partial compliance}
+
+
+
+ We now suppose that everyone is eligible for the programme in treatment villages (so no poverty requirement) but not everyone enrolls. We want to calculate the intention to treat effect (ITT). 
+
+\begin{verbatim}
+use evaluation.dta, clear // reload data as need all observations
+\end{verbatim}
+
+ Check numbers enrolled into programme to see level of compliance 
+\begin{verbatim}
+tab treatment_locality enrolled if round==0
+\end{verbatim}
+
+Estimate ITT
+ 
+\begin{verbatim}
+ttest health_expenditures if round==1, by(treatment_locality)
+
+regress health_expenditures treatment_locality if round==1, ///
+vce(cluster locality_identifier)
+\end{verbatim}
+
+The treatment effect is mucg=h reduced. Difference in health expoenditure is now lower (-6.4) compared to previous (-10.1)
+
+% % % % %
+\subsection{Experiment 3 - RCT - encouragment design}
+
+
+
+Now suppose that everyone is eligible for the programme but it is promoted in some villages (at random) and not others. The promotion villages contain 4831 households The control villages contain 5082 households. Note enrolment indicator is called enrolledrp. 
+
+
+ Check numbers enrolled in promition vs non-promotion villages
+\begin{verbatim}
+tab promotion_locality enrolled_rp if round==0
+\end{verbatim}
+
+Calculate ITT. 
+
+\begin{verbatim}
+regress health_expenditures promotion_locality ///
+if round==1, vce(cluster locality_identifier)
+\end{verbatim}
+
+In Experiments 2 and 3 how would you go about adjusting the ITT estimate in order to take account of the partial compliance / participation, and obtain an estimate of the effect of participation (not treatment assignment or promotion) on health expenditures? 
 
 \vspace{5pt}
 
@@ -95,45 +271,22 @@ Section \ref{sec:equations} is a simple guide for writing equations in \LaTeX. I
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
-%%%                   %%%
-%%%    Regressions    %%%
-%%%                   %%% 
-%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% %%%
+%%% Regressions %%%
+
 
 \clearpage
 \section{Regressions} \label{sec:regressions}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Regression 1: Basics  %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\input{regression1_1.tex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%                      %%%
-%%%   Bibliography       %%%
-%%%                      %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% %%%
+%%% Bibliography %%%
 
 \clearpage
-
-
-
-%\bibliographystyle{apalike}
-\bibliography{bibliography}  
-
-
+\bibliography{bibliography} 
 
 
 \end{document}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%    END OF DOCUMENT    %%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-% more ideas for tables? Just email or msg on Twitter
