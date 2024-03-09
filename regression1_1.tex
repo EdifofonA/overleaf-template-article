@@ -1,0 +1,45 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Basic regression table \label{reg1}}
+\begin{tabular}{l*{2}{c}}
+\toprule
+                    &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         \\
+\midrule
+Age                 &       0.037\sym{***}&       0.038\sym{***}\\
+                    &     (0.005)         &     (0.005)         \\
+\addlinespace
+Age sq.             &      -0.001\sym{***}&      -0.001\sym{***}\\
+                    &     (0.000)         &     (0.000)         \\
+\addlinespace
+Work experience     &       0.038\sym{***}&       0.037\sym{***}\\
+                    &     (0.003)         &     (0.003)         \\
+\addlinespace
+Work experience sq. &       0.000         &       0.000         \\
+                    &     (0.000)         &     (0.000)         \\
+\addlinespace
+Job tenure          &       0.038\sym{***}&       0.038\sym{***}\\
+                    &     (0.002)         &     (0.002)         \\
+\addlinespace
+Job tenure eq.      &      -0.002\sym{***}&      -0.002\sym{***}\\
+                    &     (0.000)         &     (0.000)         \\
+\addlinespace
+SMSA (=1)           &      -0.153\sym{***}&      -0.148\sym{***}\\
+                    &     (0.010)         &     (0.010)         \\
+\addlinespace
+Black (=1)          &                     &      -0.111\sym{***}\\
+                    &                     &     (0.011)         \\
+\addlinespace
+South (=1)          &                     &      -0.096\sym{***}\\
+                    &                     &     (0.010)         \\
+\addlinespace
+Constant            &       1.003\sym{***}&       1.050\sym{***}\\
+                    &     (0.066)         &     (0.066)         \\
+\midrule
+Observations        &       28093         &       28093         \\
+\bottomrule
+\multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{3}{l}{\footnotesize Data: websuse nlswork}\\
+\multicolumn{3}{l}{\footnotesize Second line note}\\
+\multicolumn{3}{l}{\footnotesize \sym{*} \(p<0.10\), \sym{**} \(p<0.05\), \sym{***} \(p<0.01\)}\\
+\end{tabular}
+\end{table}

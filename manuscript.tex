@@ -1,0 +1,606 @@
+
+
+% Reference TeX file for: https://medium.com/the-stata-guide/the-stata-to-latex-guide-6e7ed5622856
+% Asjad Naqvi (asjadnaqvi@gmail.com)
+% Last update: 25 September, 2022
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                    %%%
+%%%      Preamble      %%%
+%%%                    %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+
+%%% packages
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{amssymb, amsfonts, amsmath}
+\usepackage{bm}
+\usepackage[margin=1in]{geometry} % full-width
+    \topskip        =   20pt
+    \parskip        =   10pt
+    \parindent      =   0 pt
+    \baselineskip   =   15pt
+
+\usepackage{setspace}               % line spacing
+    \onehalfspacing
+\usepackage{adjustbox}              % resizing
+\usepackage{caption}                % to reset the cations etc 
+\usepackage{rotating}               % for the sidewaystable
+    \numberwithin{table}{section}   % reset the Table numbering for each section
+\usepackage{booktabs}               % neatly formatting lines
+\usepackage{dcolumn}                % aligning decimals
+    \newcolumntype{d}[1]{D{.}{.}{#1}}
+\usepackage{natbib}                 % bibliography
+    \bibliographystyle{plainnat}
+
+\newcommand{\sym}[1]{\rlap{#1}} % for the stars
+
+%\usepackage{threeparttable}    
+%\usepackage{graphicx}  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                    %%%
+%%%     Front page     %%%
+%%%                    %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{The Stata--to--\LaTeX Guide\thanks{See the article on \href{https://medium.com/the-stata-guide/the-stata-to-latex-guide-6e7ed5622856}{Medium} for details.}}
+
+\author{
+    Asjad Naqvi\thanks{\href{mailto:asjadnaqvi@gmail.com}{asjadnaqvi@gmail.com}. For comments and suggestions, please open an \href{https://github.com/asjadnaqvi/The-Stata-Guide/issues}{Issue} on the \href{https://github.com/asjadnaqvi/The-Stata-Guide}{Stata Guide's GitHub} page. }
+    }
+
+\date{Last updated: 8 June, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This article introduces various wrappers for the Stata \texttt{estout} package \citep{Jann2005,Jann2007} that allows one to generate various summary statistic and regression tables in \LaTeX. Rather than going into the details of the \texttt{estout} package options, which are fairly extensive, the aim of this document is to provide ``templates'' for easy  replication. This is an evolving document so please check regularly for updates. Since \LaTeX requirements change over time, please see the change log for details, or message me to fix errors if they occur. And please feel free to request or suggest other table formats. 
+\end{abstract}
+
+\vspace{4ex}
+\small{\textit{Keywords}: Stata, \LaTeX, estout, tables, regressions}
+
+\small{\textit{JEL}: 1337}
+
+%\begin{center}
+%\textbf{DOCUMENT IS BEING LIVE UPDATED! USE WITH CAUTION.}    
+%\end{center}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                    %%%
+%%%   Introduction     %%%
+%%%                    %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+
+\listoftables
+
+\newpage
+\section*{Introduction}
+The document is divided into two sections. Section \ref{sec:summstat} covers summary statistic tables and Section \ref{sec:regressions} covers regressions. All the Stata part, together with the explanations, is provided in the \href{https://medium.com/the-stata-guide/the-stata-to-latex-guide-6e7ed5622856}{Medium article}. 
+
+Section \ref{sec:equations} is a simple guide for writing equations in \LaTeX. It highlights some basic mistakes users name.
+
+\vspace{5pt}
+
+Change log:
+\begin{itemize}
+    \item 08 Jun 2023: Script checks and (minor) syntax updates where required.
+    \item 25 Sep 2022: Document completely re-written. This Fall 2022 update makes the Stata and \LaTeX code fully compatible with the TeX 2022 compiler. This update also reduces the dependency on the \texttt{estwide} and \texttt{estauto} \LaTeX codes. These were causing significant errors in the latest compilers. Additionally, due to the recent updates to the \texttt{estout} \citep{Jann2007}, additional \LaTeX workarounds and hacks are no longer needed. This reduces the complexity of the code significantly. The guide is now also completely based on standard Stata datasets. This makes it easy to replicate and update. If you would like to request additional tables, please post requests in the \href{https://github.com/asjadnaqvi/The-Stata-Guide/issues}{Issues} section in \href{https://github.com/asjadnaqvi/The-Stata-Guide}{The Stata Guide's GitHub} page.
+    \item 08 Dec 2021: Quick fix to \texttt{estwide} and \texttt{estauto} to make them compatible with TexLive 2021. This has to do with adding lines (hline or midrules) in tables. The requirements have changed slightly. Please see lines 68 and 80 above for modifications to the file. The guide will get another update at the end of the year so various minor syntax issues will be corrected.
+    \item 20 Jul 2021: Added \texttt{aux/sd} table with formatting option (Table \ref{tab:table2}). Added table on summary statistics by overlapping categories (Table \ref{tab:table10}). Section {\ref{sec:summstat}} table numbering corrected and homogenized with the Medium article. Minor corrections to the syntax and descriptions.
+    \item 20 Apr 2021: Added Section \ref{sec:equations} on writing and formatting equations in \LaTeX as supplementary material.
+    \item 04 Mar 2021: Three tables added: Table \ref{tab:table8} on t-tests, Table \ref{reg5} on stacking standard errors, and Table \ref{reg6} on rotating large tables.
+    \item 27 Feb 2021: Due to several requests, a basic regression table (Table \ref{reg1}) with a slow introduction has been added at the beginning of Section \ref{sec:regressions}. The labeling of the other tables is moved down by one step. All figures have been fixed in the Medium document which were showing the wrong Table numbers and significance levels. Several other minor fixes.
+    \item 26 Feb 2021: Minor typos and code fixes on \href{https://medium.com/the-stata-guide/the-stata-to-latex-guide-6e7ed5622856}{Medium} and here on Overleaf. Table numbers resets at each section to fix the correspondence to the Guide.
+    \item 25 Feb 2021: First release. \href{https://medium.com/the-stata-guide/the-stata-to-latex-guide-6e7ed5622856}{Stata-to-\LaTeX} guide posted on Medium with the first set of summary statistic tables (Tables \ref{tab:table1}--\ref{tab:table7}) and regression tables (Tables \ref{reg2}--\ref{reg4}). 
+\end{itemize}
+
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                   %%%
+%%%      TABLES       %%%
+%%%                   %%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Tables} \label{sec:summstat}
+
+
+%%%% TABLE 1 %%%%
+
+
+\begin{table}[!htbp]
+\caption{Summary statistics - Basic} \label{tab:table1}
+\centering
+\input{table1.tex}
+\end{table}
+
+\vfill
+
+%\input{table1_title.tex}
+
+
+%%%% TABLES 2 and 3 %%%%
+
+
+\begin{table}[!htbp]
+\caption{Summary statistics - \texttt{main/aux()} options} \label{tab:table2}
+    \begin{center}
+        \input{table2.tex}
+    \end{center}
+\end{table}
+
+\vfill
+
+\begin{table}[!htbp]
+\caption{Summary statistics - \texttt{cells()} option} \label{tab:table3}
+    \begin{center}
+        \input{table3.tex}
+    \end{center}
+\end{table}
+
+%%%% TABLE 4 %%%%
+
+\clearpage
+
+
+\begin{table}[!htbp]
+\caption{Summary statistics - \texttt{cells()} formatting} \label{tab:table4}
+    \begin{center}
+        \input{table4.tex}
+    \end{center}
+\end{table}
+
+
+%%%% TABLE 5 %%%%
+
+
+\begin{table}[!htbp]
+\caption{Summary statistics - Square brackets} \label{tab:table5}
+    \begin{center}
+        \input{table5.tex}
+    \end{center}
+\end{table}
+
+
+%%%% TABLES 6 and 7 %%%%
+
+
+\begin{table}[!htbp]
+\caption{Summary statistics - Mean 2 d.p. and SD 3 d.p.} \label{tab:table6}
+    \begin{center}
+        \input{table6.tex}
+    \end{center} 
+\end{table}
+
+\begin{table}[!htbp]
+\caption{Summary statistics - All decimals customized} \label{tab:table7}
+    \begin{center}
+        \input{table7.tex}
+    \end{center}
+\end{table}
+
+
+%%%% TABLE 8 %%%%
+
+\begin{table}[!htbp]
+\caption{Summary statistics - Grouping variables} \label{tab:table8}
+    \begin{center}
+        \input{table8.tex}
+    \end{center} 
+\end{table}
+
+
+%%%% TABLE 9 %%%%
+
+
+\begin{table}[!htbp]
+\caption{T-tests across two groups by several variables} \label{tab:table9}
+    \begin{center}
+        \input{table9.tex}
+    \end{center} 
+\small{Note:  *** p$<$0.01, ** p$<$0.05, * p$<$0.10.}  
+\end{table}
+
+%%%% TABLE 10 %%%%
+
+
+\begin{table}[!htbp]
+\caption{Summary statistics by different control groups} \label{tab:table10}
+    \begin{center}
+        \input{table10.tex}
+    \end{center} 
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                   %%%
+%%%    Regressions    %%%
+%%%                   %%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+\section{Regressions} \label{sec:regressions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Regression 1: Basics  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{regression1_1.tex}
+
+\begin{table}[!htbp]
+\caption*{Table generated without headers and footers} 
+
+\centering
+\input{regression1_2.tex}
+
+Note:  *** p$<$0.01, ** p$<$0.05, * p$<$0.10. 
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Regression 2: General formatting  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+
+\begin{table}[!htbp]
+ \caption{Regressions by different specifications, lags, and \texttt{estadd}} \label{reg2}
+ \begin{center}
+
+\resizebox{1\textwidth}{!}{
+ \input{regression2.tex}
+ }
+
+
+\end{center}
+\small{Note:  *** p$<$0.01, ** p$<$0.05, * p$<$0.10. Dependant variable: Deaths (norm.)} 
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Regression 3: unusual names  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+
+\begin{table}[!htbp]
+ \caption{Regressions with unusual names} \label{reg3}
+\centering
+ \input{regression3.tex}
+
+\small{Note:  *** p$<$0.01, ** p$<$0.05, * p$<$0.10} 
+\end{table}
+
+\vfill
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Regression 4: Collecting coefficients in a table %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{table}[!htbp]
+    \caption{Regressions by groups} \label{reg4}
+        \begin{center}
+            \resizebox{1\textwidth}{!}{
+                    \input{regression4.tex}
+            }
+        \end{center}
+    \small{Note:  *** p$<$0.01, ** p$<$0.05, * p$<$0.10.} 
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Regression 5: SE Stack   %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+
+
+\begin{table}[!htbp]
+ \caption{Stacking regressions from different specifications} \label{reg5}
+\centering
+\input{regression5.tex}
+
+\vspace{3pt}
+\small{Note:  *** p$<$0.01, ** p$<$0.05, * p$<$0.10. Inspired by the ``Mining Mita'' article \citep{Dell2010}} 
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Regression 6: SE stack       %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{5em}
+
+\begin{table}[!htbp]
+ \caption{Stacking standard errors from different specifications} \label{reg6}
+\begin{center}
+\input{regression6.tex}
+ \end{center}
+
+\small{Note:  *** p$<$0.01, ** p$<$0.05, * p$<$0.10. Random effect S.E.s in curly brackets and clustered S.E. in square brackets.} 
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Regression 7: Sideways table    %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+
+\begin{sidewaystable}[!htbp]  % this needs the rotating package
+
+\caption{Table rotation} \label{reg7}
+%\centering
+
+\resizebox{1\textwidth}{!}{  % can be used to rescale tables
+	  \input{regression7.tex}
+	   }
+
+\vspace{1em}
+
+\small{\textit{Note:}  *** p$<$0.01, ** p$<$0.05, * p$<$0.10. All regressions control for month fixed effects to capture seasonal variations.} 
+\end{sidewaystable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                     %%%
+%%%   Equations guide   %%%
+%%%                     %%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+
+\section{Symbols and Equations} \label{sec:equations}
+
+This section will cover some basics of equations and math symbols commonly used in economics. This is to supplement your Stata tables and general paper writing in \LaTeX.
+
+
+First differentiate between inline maths $Y_t = \beta_0 + \beta_1 X_t + \epsilon$ verses maths equations:
+
+\begin{equation}
+    Y_t = \beta_0 + \beta_1 X_t + \epsilon  \label{eq:reg1}
+\end{equation}
+
+Equations can be labeled and referenced. For example, see the TeX for Equation \ref{eq:reg1}, which shows a simple regression model.
+
+Equation numbers can be turned off as well:
+
+\begin{equation}
+    Y_t = \beta_0 + \beta_1 X_t + \epsilon \nonumber
+\end{equation}
+
+One can write multiple equations and align them as well. Eqnarray is one way of doing this:
+
+\begin{eqnarray}
+    Y_t &=& \beta_0 + \beta_1 X_t + \epsilon \\ 
+    Z_t &=& \alpha_0 + \alpha_1 Y_t + \epsilon 
+\end{eqnarray}
+
+One can also just label the whole equation block once as follows: 
+
+\begin{eqnarray}
+    Y_t &=& \beta_0 + \beta_1 X_t + \epsilon \\  \nonumber
+    Z_t &=& \alpha_0 + \alpha_1 Y_t + \epsilon 
+\end{eqnarray}
+
+This can also be used to split long equations across lines:
+
+\begin{eqnarray}
+    Y_t &=& \beta_0 + \beta_1 X_t + \dots  \\  \nonumber
+        && \dots + \alpha_0 + \alpha_1 Y_t + \epsilon 
+\end{eqnarray}
+
+Superscripts and subscripts need to be carefully captured using curly brackets:
+\begin{eqnarray}
+    \texttt{Wrong} &=& \beta^i_0t + \beta^ij_1t X^i_t + \epsilon \\  \nonumber
+    \texttt{Correct} &=& \beta^{i}_{0t} + \beta^{ij}_{1t} X^i_t + \epsilon
+\end{eqnarray}
+
+If there is only one item in the superscript or the subscript, then it doesn't really matter, but preferably they should have curly brackets around them.
+
+Brackets are also often wrongly specified:
+
+\begin{eqnarray}
+    \texttt{Wrong} &=&  (n^2) + \{\frac{1}{n} \sum^{J}_{j=1}{(1 + n^j)}\} + [\frac{1}{n}]   \\  \nonumber
+    \texttt{Correct} &=& \left(n^2 \right) + \left\{\frac{1}{n}\sum^{J}_{j=1}{\left(1 + n^j\right)}\right\}  + \left[\frac{1}{n} \right]
+\end{eqnarray}
+
+Using left and right to open and close brackets tells \LaTeX to use the maths symbols for brackets rather than the bracket characters. Also note the use of curly brackets. They need a qualifier since standard curly brackets are used for writing syntax in \LaTeX.
+
+The remaining maths is just layering on these principles including finding the right symbols. But be careful when combining elements:
+
+\begin{eqnarray}
+    \texttt{Wrong} &=& \hat{Y_{it}} = Y_{it} - \bar{Y_{it}} \\ \nonumber
+    \texttt{Correct} &=& \hat{Y}_{it} = Y_{it} - \bar{Y}_{it} 
+\end{eqnarray}
+
+Note above how the hats and bars are shifted to the right and are not really over the symbols. 
+
+Some other math symbol examples:
+
+\begin{equation}
+    \lim_{x \to +\infty} f(x) = f'(x) = \frac{\partial f}{\partial x} + \frac{\partial^2 f}{\partial x^2}
+\end{equation}
+
+or more complex stuff like:
+
+\begin{equation}
+    \sum_{j=1}^J x_{j} \leq \prod_{j=1}^J x_{j} \neq \int_{a}^{b} f(x) dx
+\end{equation}
+
+which we can take to the next level:
+
+\begin{equation}
+    \sum^K_{k=1}\sum^J_{j=1} x_j y_k \leq \prod^K_{k=1}\prod^J_{j=1} x_j y_k \neq \int_{a}^{b}\int_{c}^{d} f(x,y) dxdy
+\end{equation}
+
+Another feature of math mode is spacing, which you deal with when you have nothing better to do and/or are obsessed with formatting:
+
+\begin{eqnarray}
+    \texttt{Negative} &=& x\!y\!z   \\ \nonumber
+    \texttt{Normal} &=& xyz         \\ \nonumber
+    \texttt{Thin} &=& x\,y\,z       \\ \nonumber
+    \texttt{Medium} &=& x\:y\:z     \\ \nonumber
+    \texttt{Thick} &=& x\;y\;z 
+\end{eqnarray}
+
+
+Another feature that is helpful are those large curly brackets that define conditions, and are hence called conditional equations:
+
+\begin{equation}
+y=
+\begin{cases}
+			a + bx + cx^2, & \text{if $x \geq 1$} \\
+			\frac{1}{x^2}, & \text{if $0 < x \leq 1$} \\
+            0, & \text{otherwise} 
+		 \end{cases}
+\end{equation}
+
+Notice how the text field is used to control the spacing of the text. Within the text field we can write the equations in math form by using the dollar sign.
+
+Similar to the conditional bracket are underscores that can be used to highlight parts of an equation:
+
+\begin{equation}
+    y_{it} = \beta_0 + \beta_1 P_i + \beta_2 T_t + \underbrace{\beta_3 \left({P \times T}\right)_{it}}_{\text{Coef. of interest}} + \epsilon_{it}
+\end{equation}
+
+Basically underscores and overscores can be used on multiple segments of equations as long as the brackets are balanced:
+
+\begin{equation}
+    y_{it} = \overbrace{\underbrace{\beta_0 + \beta_1 P_i + \beta_2 T_t}_{\text{Parallel trends}} + \underbrace{\beta_3 \left({P \times T}_{it}\right)}_{\text{Coef. of interest}} + \epsilon_{it}}^{\text{2$\times$2 Diff-in-Diff model}}
+\end{equation}
+
+Matrices are also simply to construct:
+
+\begin{equation}
+    \begin{matrix}
+        a & b   \\
+        c & d
+    \end{matrix}
+\end{equation}
+
+or with brackets and equations:
+
+\begin{equation}
+    \begin{pmatrix}
+        y_1  \\ y_2
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        a_{11} & a_{12}   \\
+        a_{21} & a_{22}
+    \end{pmatrix}
+    \begin{pmatrix}
+        x_1  \\ x_2
+    \end{pmatrix}
+    +
+    \begin{pmatrix}
+        b_1  \\ b_2
+    \end{pmatrix}
+\end{equation}
+
+Let's make the whole setup more complex:
+
+\begin{equation}
+    \underbrace{\begin{pmatrix}
+        x_1  \\ x_2
+    \end{pmatrix}}_{\bm{x}}
+    =
+    \underbrace{\begin{pmatrix}
+        a_{11} & a_{12}   \\
+        a_{21} & a_{22}
+    \end{pmatrix}
+    \begin{pmatrix}
+        x_1  \\ x_2
+    \end{pmatrix}}_{\bm{Ax}}
+    +
+    \underbrace{\begin{pmatrix}
+        b_1  \\ b_2
+    \end{pmatrix}}_{\bm{b}}
+\end{equation}
+
+from which we get
+
+\begin{eqnarray}
+    \mathbf{x} &=& \mathbf{Ax} + \mathbf{b} \\ \nonumber
+    \mathbf{x - Ax} &=& \mathbf{b} \\ \nonumber
+    \mathbf{(I - A)x} &=& \mathbf{b} \\ \nonumber
+    \mathbf{x} &=& \mathbf{(I - A)^{-1}b}
+\end{eqnarray}
+
+Quite a pain to do this copy pasting. It is OK with a few equations but if you are regularly dealing with matrix algebra, better to write some script to make this easier. But this advanced stuff I won't touch here. In the equation above bm or mathbf basically stands for `bold maths' or `bold font'. Note that this is different from converting a symbol in a letter and defining it as bold text. So be careful when differentiating between \textbf{A,B,$\alpha,\Gamma,\Theta$} versus $\bm{A,B,\alpha,\Gamma,\Theta}$ versus  $\mathbf{A,B,\alpha,\Gamma,\Theta}$.
+
+Another under-utilized tool in \LaTeX are phantom spaces, that are mostly used to align stuff. These are ghost spaces that are defined by whatever is given in the phantom option:
+
+\begin{eqnarray}
+    \texttt{Basic} &=& \Pi^{ij}_t \\ \nonumber
+    \texttt{Without phantom} &=& \Pi^{j}_t \\ \nonumber
+    \texttt{With phantom} &=& \Pi^{\phantom{i}j}_t
+\end{eqnarray}
+
+Notice the empty $i$ space in the last equation. Where is this useful? For example, in aligning matrices:
+\begin{eqnarray}
+    \texttt{Without phantom} &=& \begin{pmatrix} -1 & 2 \\ 3 & -4  \end{pmatrix} \\ \nonumber
+    \texttt{With phantom}    &=& \begin{pmatrix} -1 & \phantom{-}2 \\ \phantom{-}3 & -4  \end{pmatrix}
+\end{eqnarray}
+
+Here we basically add a `fake' empty negative sign to align the matrix entries.
+
+Another place where I have personally used phantom spaces, is to explain more complex equations with fractions:
+
+\begin{equation}
+    \texttt{Without vphantom} = \underbrace{\left(a + bx + cx^2\right)}_{\text{First part}} + \underbrace{\left(\frac{1}{x} + \frac{1}{\sqrt{x}}\right)}_{\text{Second part}}  
+\end{equation}
+
+Above we can see above that the underbraces are not aligned. This can be corrected by adding a `vertical' phantom space or vphantom as follows:
+
+\begin{equation}
+    \texttt{With vphantom} = \underbrace{\vphantom{\left(\frac{1}{x}\right)} \left(a + bx + cx^2\right)}_{\text{First part}} + \underbrace{\left(\frac{1}{x} + \frac{1}{\sqrt{x}}\right)}_{\text{Second part}}  
+\end{equation}
+
+Note above that we phantom space not only some random fraction but also the brackets that go with it since they also add to the vertical space. We do this outside of the main equation of the `First part' to prevent the `First part' brackets to be larger than they should be.
+
+If you have any equation questions or some suggestions then please let me know and I will add them here.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                      %%%
+%%%   Bibliography       %%%
+%%%                      %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+
+
+
+%\bibliographystyle{apalike}
+\bibliography{bibliography}  
+
+
+
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%    END OF DOCUMENT    %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% more ideas for tables? Just email or msg on Twitter.
