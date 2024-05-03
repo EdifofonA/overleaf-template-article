@@ -1,107 +1,37 @@
 \documentclass[12pt]{article}
 
-\usepackage[a4paper, margin=1in]{geometry}
-    \parindent = 0 pt
-
-% change typography for document
-\usepackage[bitstream-charter]{mathdesign}
-%\renewcommand\familydefault{\sfdefault} %use sans serif
-
-% line spacing of section titles
-\usepackage{titlesec}
-    \titlespacing\section{0pt}{12pt plus 0pt minus 0pt}{-4pt plus 0pt minus 0pt}
-    \titlespacing\subsection{0pt}{4pt plus 0pt minus 0pt}{-8pt plus 0pt minus 0pt}
-    \titlespacing\subsubsection{0pt}{12pt plus 0pt minus 0pt}{0pt plus 0pt minus 0pt}
-
-% line spacing of paragraphs
-\usepackage{setspace} 
-    \onehalfspacing
-
-% bibliography
-\usepackage[style=authoryear, dashed=false]{biblatex}
-\addbibresource{bibliography.bib}
-
-% links in document
-\usepackage[colorlinks=true, allcolors=blue, urlcolor=blue]{hyperref}
-
-% caption for tables and figures
-\usepackage[labelfont=bf, labelsep=period]{caption} %others: labelfont and textfont
-    \captionsetup[table]{font={normalsize, stretch=1.1}, skip=3pt}
-    \captionsetup[figure]{font={normalsize, stretch=1.1}, skip=0.5pt}
-    
-% No paragraph indentation
-\setlength{\parindent}{0pt} 
-
-% Space between paragraphs
-\setlength{\parskip}{12pt} 
-
-% Redefine \thesection to include a period after the section number
-\renewcommand\thesection{\arabic{section}.}
-\renewcommand\thesubsection{\thesection\arabic{subsection}.}
-\renewcommand\thesubsubsection{\thesubsection\arabic{subsubsection}.}
-
-% row height of table contents
-\renewcommand{\arraystretch}{1.1} 
-
-% neatly formatting (table) lines
-\usepackage{booktabs} 
-
-% define new input command
-\makeatletter
-\let\PlainInput=\@@input 
-\makeatother
-
-% enable figure addition
-\usepackage{graphicx} 
-
-% keep tables and figures "here"
-\usepackage{float}    
-
-% needed for table formatting
-\usepackage{tabularx} 
-\usepackage{multirow}
-\usepackage{array}
-    \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-    \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-    \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage{ediArticle}  %from ediArticle.sty
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\Huge Just Another Latex Template}
-\author{\Large Edifofon Akpan}
-\date{\Large 19 March 2024}
+\title{\LARGE \bfseries \vspace{-1cm} Just Another Latex Template \\
+    \LARGE \normalfont Research Proposal}
+\author{\Large \textit{Edifofon Akpan}}
+\date{ }
 
 \begin{document}
+
+% Set font size to 13pt
+\fontsize{13pt}{15pt}\selectfont
 
 \maketitle
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit \parencite{Jann2005}. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis \parencite{Jann2007}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-
-Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus.
+Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Methods}
 \subsection{Data sources}
-Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus \parencite[see][]{Weber2012}.
+\subsubsection{Patient data}
+Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 
-Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus.
-
-\subsection{Model structure}
-Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus.
-
-Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus.
-
-Phasellus venenatis sem non iaculis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus.
-
-\section{Results}
-Cras velit lectus, interdum nec nibh eu, varius dictum dolor (\autoref{MyTable1}). Mauris id laoreet ante, at cursus nunc. Donec sit amet viverra justo. Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor. Mauris id laoreet ante, at cursus nunc. Donec sit amet viverra justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus.
+\hspace{1em}
 
 \begin{table}[H]
-    \small \centering
+    \centering 
     \caption{The facts about lorem ipsum generator from online sources.}
     \begin{tabular}{|C{2cm}|L{10cm}|C{2.5cm}|}
         \hline
@@ -111,36 +41,42 @@ Cras velit lectus, interdum nec nibh eu, varius dictum dolor (\autoref{MyTable1}
     \caption*{\footnotesize \textit{Notes:} Donec sit amet viverra justo. Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.}
 \end{table}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. 
+\subsubsection{Costing data}
+Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque
 
+\subsection{Model structure}
+Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque
+
+\section{Results}
+Cras velit lectus, interdum nec nibh eu, varius dictum dolor (\autoref{MyTable1}). Mauris id laoreet ante, at cursus nunc. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque Donec sit amet viverra justo. Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi.
+
+\hspace{1em}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/figure.png}
     \caption{The facts about lorem ipsum generator from online sources.}
     \label{fig:enter-label}
-    \caption*{\footnotesize \textit{Notes:} Donec sit amet viverra justo. Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.}
+    \caption*{\footnotesize \textit{Notes:} Donec sit amet viverra justo. Duis malesuada velit at pellentesque venenatis. Donsectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.}
 \end{figure}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. 
-
 \section{Discussion}
+Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum nequeNullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum nequeNullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum nequeNullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque
 
-Duis malesuada velit at pellentesque venenatis. Phasellus venenatis sem non iaculis euismod. Fusce ultrices, erat at pellentesque gravida, est mi lobortis justo, sed sagittis risus mi non mi. Nullam a urna nibh. Nunc laoreet, justo eu consectetur semper, sem odio interdum mi, id egestas erat mauris fermentum neque. Sed in augue dolor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. 
+\textcite{peasgood_developing_2022, peasgood_should_2022}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis \parencite{Dell2010}. 
+\parencite{peasgood_randomised_2023, peasgood_systematic_2024, the_nhs_covid-19_2023}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur odio at aliquet dapibus. Mauris eleifend justo volutpat velit ornare, et elementum dui volutpat. Suspendisse dapibus imperdiet urna eu mattis. 
-
+\parencite{shih_health_2022, james_patient_2022, harrison_estimating_2023}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% %%%
 %%% Bibliography %%%
 
-%\clearpage
-\printbibliography[title={Book Sources}]
+\clearpage
+\newrefcontext[sorting=nyt]
+\printbibliography
 
 
 \end{document}
